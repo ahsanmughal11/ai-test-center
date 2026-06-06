@@ -6,7 +6,7 @@ export default function ConversationItem({ conversation, active, onClick }) {
       type="button"
       onClick={onClick}
       className={[
-        'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150',
+        'w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 text-left transition-colors duration-150',
         active
           ? 'bg-[var(--color-accent-muted)] border-l-2 border-[var(--color-accent)]'
           : 'hover:bg-[var(--color-surface-overlay)] border-l-2 border-transparent',

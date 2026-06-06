@@ -35,6 +35,11 @@
     margin: 0;
     background-color: var(--color-surface);
     color: var(--color-text-primary);
+    min-height: 100dvh;
+  }
+
+  #root {
+    min-height: 100dvh;
   }
 
   input,
@@ -79,5 +84,13 @@
   .scrollbar-thin::-webkit-scrollbar-thumb {
     background: var(--color-border);
     border-radius: 3px;
+  }
+
+  .safe-bottom {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
+  .safe-top {
+    padding-top: max(0rem, env(safe-area-inset-top));
   }
 }

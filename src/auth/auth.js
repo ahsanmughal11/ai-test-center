@@ -28,6 +28,7 @@ async function createUserProfile(user, name) {
   await setDoc(doc(db, 'users', user.uid), {
     uid: user.uid,
     name,
+    nameLower: name.toLowerCase(),
     email: user.email,
     createdAt: serverTimestamp(),
   })

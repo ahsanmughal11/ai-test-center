@@ -1,7 +1,7 @@
 export default function MessageBubble({ message, isSent, showSender }) {
   return (
     <div className={`flex ${isSent ? 'justify-end' : 'justify-start'}`}>
-      <div className={`max-w-[75%] sm:max-w-[65%] ${isSent ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
+      <div className={`max-w-[88%] sm:max-w-[75%] md:max-w-[65%] ${isSent ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
         {showSender && message.senderName && (
           <span className="text-xs font-medium text-[var(--color-text-muted)] px-1">
             {message.senderName}

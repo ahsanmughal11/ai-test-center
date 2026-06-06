@@ -1,6 +1,6 @@
 export default function AuthLayout({ children, title, subtitle }) {
   return (
-    <div className="auth-gradient min-h-screen flex items-center justify-center p-4 sm:p-6">
+    <div className="auth-gradient min-h-dvh flex items-center justify-center p-4 sm:p-6 safe-top safe-bottom">
       <div className="w-full max-w-[420px]">
         <div className="mb-8 text-center">
           <div className="inline-flex items-center justify-center size-14 rounded-2xl bg-[var(--color-accent-muted)] mb-5">

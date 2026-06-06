@@ -72,7 +72,7 @@ export default function Login() {
           autoComplete="current-password"
         />
 
-        <div className="flex items-center justify-between text-sm">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm">
           <label className="flex items-center gap-2 cursor-pointer text-[var(--color-text-secondary)]">
             <input
               type="checkbox"
