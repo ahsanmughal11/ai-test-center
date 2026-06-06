@@ -6,6 +6,7 @@ export default function ChatSidebar({
   activeId,
   onSelect,
   onLogout,
+  loggingOut = false,
   mobileOpen,
   onCloseMobile,
 }) {
@@ -38,7 +39,8 @@ export default function ChatSidebar({
           <button
             type="button"
             onClick={onLogout}
-            className="p-2 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-overlay)] transition-colors"
+            disabled={loggingOut}
+            className="p-2 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-overlay)] transition-colors disabled:opacity-50"
             title="Sign out"
           >
             <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

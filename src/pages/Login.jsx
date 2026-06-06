@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import AuthLayout from '../components/auth/AuthLayout'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
+import { getAuthErrorMessage, signIn } from '../auth/auth'
 
 const MailIcon = () => (
   <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -20,15 +21,22 @@ export default function Login() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
+    setError('')
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
+
+    try {
+      await signIn({ email, password })
       navigate('/chats')
-    }, 600)
+    } catch (err) {
+      setError(getAuthErrorMessage(err))
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -37,6 +45,12 @@ export default function Login() {
       subtitle="Sign in to continue to Instant Chat"
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        {error && (
+          <p className="rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-4 py-3 text-sm text-[var(--color-danger)]">
+            {error}
+          </p>
+        )}
+
         <Input
           label="Email"
           type="email"

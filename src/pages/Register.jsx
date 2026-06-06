@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import AuthLayout from '../components/auth/AuthLayout'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
+import { getAuthErrorMessage, signUp } from '../auth/auth'
 
 const UserIcon = () => (
   <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -28,28 +29,35 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [validationError, setValidationError] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
+    setValidationError('')
     setError('')
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match')
+      setValidationError('Passwords do not match')
       return
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters')
+      setValidationError('Password must be at least 6 characters')
       return
     }
 
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
+
+    try {
+      await signUp({ name, email, password })
       navigate('/chats')
-    }, 600)
+    } catch (err) {
+      setError(getAuthErrorMessage(err))
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -58,6 +66,12 @@ export default function Register() {
       subtitle="Join Instant Chat and start messaging"
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {error && (
+          <p className="rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-4 py-3 text-sm text-[var(--color-danger)]">
+            {error}
+          </p>
+        )}
+
         <Input
           label="Full name"
           type="text"
@@ -95,7 +109,7 @@ export default function Register() {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           icon={<LockIcon />}
-          error={error}
+          error={validationError}
           required
           autoComplete="new-password"
         />

@@ -3,16 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import ChatSidebar from '../components/chat/ChatSidebar'
 import ChatWindow from '../components/chat/ChatWindow'
 import { conversations } from '../data/mockChats'
+import { logOut } from '../auth/auth'
 
 export default function Chats() {
   const navigate = useNavigate()
   const [activeId, setActiveId] = useState(conversations[0]?.id ?? null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [loggingOut, setLoggingOut] = useState(false)
 
   const activeConversation = conversations.find((c) => c.id === activeId) ?? null
 
-  function handleLogout() {
-    navigate('/login')
+  async function handleLogout() {
+    setLoggingOut(true)
+    try {
+      await logOut()
+      navigate('/login')
+    } catch {
+      setLoggingOut(false)
+    }
   }
 
   return (
@@ -31,6 +39,7 @@ export default function Chats() {
         activeId={activeId}
         onSelect={setActiveId}
         onLogout={handleLogout}
+        loggingOut={loggingOut}
         mobileOpen={sidebarOpen || !activeId}
         onCloseMobile={() => setSidebarOpen(false)}
       />
